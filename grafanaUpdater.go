@@ -1,26 +1,26 @@
 package main
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
-	"errors"
-	"encoding/json"
-	"log"
 )
 
 type GrafanaUpdater struct {
-	username string
-	password string
-	dashboardApiUrl string
+	username         string
+	password         string
+	dashboardApiUrl  string
 	datasourceApiUrl string
 }
 
 func NewGrafanaUpdater(url string, username string, password string) *GrafanaUpdater {
 	return &GrafanaUpdater{
-		username: username,
-		password: password,
-		dashboardApiUrl: fmt.Sprintf("%s/api/dashboards/import", url),
+		username:         username,
+		password:         password,
+		dashboardApiUrl:  fmt.Sprintf("%s/api/dashboards/import", url),
 		datasourceApiUrl: fmt.Sprintf("%s/api/datasources", url),
 	}
 }
@@ -57,7 +57,8 @@ func grafanaApiPost(url string, postBody string) error {
 	if err != nil {
 		return err
 	}
-	req.SetBasicAuth(*grafanaUsername, *grafanaPassword)
+	//req.SetBasicAuth(*grafanaUsername, *grafanaPassword)
+	req.Header.Add("X-Forwarded-User", "admin")
 	req.Header.Add("Content-Type", "application/json")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {

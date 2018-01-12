@@ -5,7 +5,9 @@ import (
 	"log"
 	"os"
 	"time"
-	"gopkg.in/cheggaaa/mb.v1"
+
+	"fmt"
+	"net/http"
 
 	kapi "k8s.io/kubernetes/pkg/api"
 	kcache "k8s.io/kubernetes/pkg/client/cache"
@@ -13,18 +15,16 @@ import (
 	kframework "k8s.io/kubernetes/pkg/controller/framework"
 	kselector "k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/util/wait"
-	"fmt"
-	"net/http"
 )
 
 var (
 	configmapDashboardAnnotation  = flag.String("dashboardAnnotation", os.Getenv("CONFIG_MAP_DASHBOARD_ANNOTATION"), "Annotation that states that this configmap contains a grafana dashboard")
 	configmapDatasourceAnnotation = flag.String("dataSourceAnnotation", os.Getenv("CONFIG_MAP_DATASOURCE_ANNOTATION"), "Annotation that states that this configmap contains a grafana datasource")
-	grafanaUrl      = flag.String("grafanaUrl", os.Getenv("GRAFANA_URL"), "Grafana URL to push dashboard updates")
-	grafanaUsername = flag.String("grafanaUser", os.Getenv("GRAFANA_USERNAME"), "Grafana username to push dashboard updates")
-	grafanaPassword = flag.String("grafanaPassword", os.Getenv("GRAFANA_PASSWORD"), "Grafana password to push dashboard updates")
-	batchTime = flag.Int("batchtime", 5, "Time window to batch updates (in seconds, default: 5)")
-	helpFlag         = flag.Bool("help", false, "")
+	grafanaUrl                    = flag.String("grafanaUrl", os.Getenv("GRAFANA_URL"), "Grafana URL to push dashboard updates")
+	grafanaUsername               = flag.String("grafanaUser", os.Getenv("GRAFANA_USERNAME"), "Grafana username to push dashboard updates")
+	grafanaPassword               = flag.String("grafanaPassword", os.Getenv("GRAFANA_PASSWORD"), "Grafana password to push dashboard updates")
+	batchTime                     = flag.Int("batchtime", 5, "Time window to batch updates (in seconds, default: 5)")
+	helpFlag                      = flag.Bool("help", false, "")
 
 	grafana = NewGrafanaUpdater(*grafanaUrl, *grafanaUsername, *grafanaPassword)
 )
