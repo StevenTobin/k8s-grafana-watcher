@@ -18,8 +18,8 @@ build:
         --rm -i \
         -e GOARCH=amd64 \
         -e CGO_ENABLED=0 \
-        -v $(WORKING_DIR):/go/src/github.com/PierreVincent/grafana-watcher \
-        -w /go/src/github.com/PierreVincent/grafana-watcher \
+        -v $(WORKING_DIR):/home/stobin/repos/go-workspace/src/src/github.com/k8s-grafana-watcher \
+        -w /home/stobin/repos/go-workspace/src/src/github.com/k8s-grafana-watcher \
         golang:1.8 go build -ldflags="-s -w" -v -o bin/main *.go
 
 # Build docker image
