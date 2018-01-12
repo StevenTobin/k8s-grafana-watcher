@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -66,7 +65,7 @@ func grafanaApiPost(url string, postBody string) error {
 	}
 	statusCode := resp.StatusCode
 	if statusCode != 200 {
-		return errors.New(fmt.Sprintf("Grafana API call failed with code %d", resp))
+		return fmt.Errorf(resp)
 	}
 	return nil
 }
