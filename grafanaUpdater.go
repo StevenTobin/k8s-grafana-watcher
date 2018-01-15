@@ -20,7 +20,7 @@ func NewGrafanaUpdater(url string, username string, password string) *GrafanaUpd
 	return &GrafanaUpdater{
 		username:         username,
 		password:         password,
-		dashboardApiUrl:  fmt.Sprintf("%s/api/dashboards/import", url),
+		dashboardApiUrl:  fmt.Sprintf("%s/api/dashboards/db", url),
 		datasourceApiUrl: fmt.Sprintf("%s/api/datasources", url),
 	}
 }
