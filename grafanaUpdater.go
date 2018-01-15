@@ -64,9 +64,10 @@ func grafanaApiPost(url string, postBody string) error {
 	if err != nil {
 		return err
 	}
+	response := resp.Body
 	statusCode := resp.StatusCode
 	if statusCode != 200 {
-		return errors.New(fmt.Sprintf("Grafana API call failed with code %d", statusCode))
+		return errors.New(fmt.Sprintf("Grafana API call failed with code %d", response))
 	}
 	return nil
 }
